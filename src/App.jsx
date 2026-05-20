@@ -139,13 +139,12 @@ const WelcomePopup = ({ onClose }) => (
       <div className="welcome-body">
         <IcoInfo />
         <div>
-          <p style={{ fontWeight: 700, marginBottom: 4 }}>Portafolio v1.0 — Nicolás Sicard</p>
+          <p style={{ fontWeight: 700, marginBottom: 4 }}>Portafolio v1.0 — Nicolás Sicard Salazar</p>
           <p>
             Estás por entrar a un portafolio frontend con estética 90s. Soy
             Nicolás, desarrollador con 5+ años de experiencia construyendo
             productos web modernos.
           </p>
-          <p style={{ marginTop: 8 }}>Hacé click en cualquier ventana para explorar.</p>
         </div>
       </div>
       <div className="welcome-actions">
