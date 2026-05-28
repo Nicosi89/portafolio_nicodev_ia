@@ -12,7 +12,7 @@ const Hero = ({ onCta }) => {
         por qué ser como en los 90s
       </h1>
       <p className="lede">
-        Desarrollo del siglo XXI de punta a punta (front y backend) inpulsado por la IA para que su proyecto
+        Desarrollo del siglo XXI de punta a punta (front y backend) impulsado por la IA para que su proyecto
         digital sea ágil, poderoso y tal como usted lo sueña.
       </p>
       <div className="ctas">
@@ -289,8 +289,7 @@ const Contact = ({ onSubmit }) => {
           ¿Tienes un <span className="accent">proyecto en mente</span>?
         </h2>
         <p className="sub" style={{ margin: "0 auto" }}>
-          Escribime y respondo en menos de 24h hábiles. También me podés
-          encontrar en las redes de abajo.
+          Escríbime al WhatsApp.
         </p>
       </div>
 
