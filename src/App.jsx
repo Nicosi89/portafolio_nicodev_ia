@@ -141,7 +141,7 @@ const WelcomePopup = ({ onClose }) => (
         <div>
           <p style={{ fontWeight: 700, marginBottom: 4 }}>Portafolio v1.0 — Nicolás Sicard Salazar</p>
           <p>
-            Estás por entrar a un portafolio frontend con estética 90s. Soy
+            Estás por entrar a un portafolio fullstack con estética 90s. Soy
             Nicolás, desarrollador con 5+ años de experiencia construyendo
             productos web modernos.
           </p>
@@ -217,14 +217,12 @@ const ProjectModal = ({ project, onClose }) => {
           </div>
         </div>
         <div className="modal-body">
-          <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 22 }}>
-            <div className="win-inset">
+          <div className="modal-grid">
+            <div className="win-inset modal-media">
               {project.video_url ? (
                 <iframe
                   src={`https://www.youtube.com/embed/${new URL(project.video_url).searchParams.get("v") || project.video_url.split("/").pop()}`}
-                  width="300"
-                  height="450"
-                  style={{ border: "none", display: "block" }}
+                  className="modal-iframe"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   title={`${project.title} video`}
@@ -234,9 +232,9 @@ const ProjectModal = ({ project, onClose }) => {
               )}
             </div>
             <div>
-              <h3 style={{ marginTop: 0, fontSize: 22 }}>{project.title}</h3>
-              <p style={{ fontFamily: "var(--body-font)", fontSize: 15, lineHeight: 1.55 }}>{project.desc}</p>
-              <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "4px 14px", fontSize: 16, marginTop: 12 }}>
+              <h3 className="modal-title">{project.title}</h3>
+              <p className="modal-desc">{project.desc}</p>
+              <div className="modal-meta">
                 <strong>Rol:</strong><span>{project.role}</span>
                 <strong>Año:</strong><span>{project.year}</span>
                 <strong>Stack:</strong><span>{project.tags.join(" · ")}</span>
@@ -244,9 +242,8 @@ const ProjectModal = ({ project, onClose }) => {
               </div>
             </div>
           </div>
-          
         </div>
-        <div style={{ padding: "10px 22px 18px", display: "flex", justifyContent: "flex-end", gap: 10 }}>
+        <div className="modal-footer">
           <button className="btn-95" onClick={onClose}>Cerrar</button>
         </div>
       </div>

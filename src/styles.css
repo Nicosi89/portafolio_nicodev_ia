@@ -53,6 +53,7 @@ html, body {
   color: white;
   font-family: var(--body-font);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 body {
@@ -447,7 +448,7 @@ body {
 /* ---------- Mi trabajo (project mini-windows) ---------- */
 .projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
   gap: 24px;
   max-width: 1280px;
   margin: 0 auto;
@@ -747,6 +748,72 @@ body {
 .modal-body { padding: 22px 22px 18px; }
 .modal-body p { font-family: var(--body-font); font-size: 15px; line-height: 1.55; }
 
+.modal-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.modal-media {
+  width: 100%;
+  aspect-ratio: 300 / 450;
+  overflow: hidden;
+}
+.modal-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.modal-title { margin-top: 0; font-size: 22px; }
+.modal-desc { font-family: var(--body-font); font-size: 15px; line-height: 1.55; }
+.modal-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  font-size: 16px;
+  margin-top: 12px;
+}
+.modal-meta a { word-break: break-all; }
+.modal-footer {
+  padding: 10px 22px 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-desc { overflow-wrap: anywhere; }
+.modal-meta > span { overflow-wrap: anywhere; min-width: 0; }
+
+@media (max-width: 640px) {
+  .modal-backdrop { padding: 10px; }
+  .modal { max-height: 95vh; }
+  .modal-body { padding: 14px; }
+  .modal-footer { padding: 10px 14px 14px; }
+  .modal-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .modal-media {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+  .modal-title { font-size: 18px; overflow-wrap: anywhere; }
+  .modal-desc { font-size: 14px; }
+  .modal-meta { font-size: 14px; gap: 4px 10px; }
+
+  .modal .title-bar { align-items: flex-start; }
+  .modal .title-bar-text {
+    font-size: 13px;
+    white-space: normal;
+    overflow: visible;
+    line-height: 1.25;
+    flex: 1 1 auto;
+    min-width: 0;
+    word-break: break-word;
+  }
+}
+
 /* ---------- Welcome popup ---------- */
 .welcome {
   max-width: 460px;
@@ -856,10 +923,14 @@ body {
 
 /* Responsive tweaks */
 @media (max-width: 700px) {
-  .toolbar { flex-wrap: wrap; }
+  .win-frame { margin: 4px auto; }
+  .toolbar { flex-wrap: wrap; overflow: hidden; }
+  .toolbar img { max-width: 100%; height: auto; }
   .tool-btn { width: 44px; height: 44px; }
   .brand-stamp { display: none; }
-  .menu-bar { font-size: 14px; }
+  .menu-bar { font-size: 14px; flex-wrap: wrap; }
+  .address-bar { flex-wrap: wrap; }
+  .address-bar .field { min-width: 0; flex: 1 1 100%; }
   .hero { padding: 50px 4vw 60px; }
   .hero-stats { gap: 32px; }
   .nav-pill { gap: 18px; }

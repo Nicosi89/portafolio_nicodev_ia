@@ -174,8 +174,8 @@ const MyWork = ({ onOpenProject }) => (
         Proyectos <span className="accent">destacados</span>
       </h2>
       <p className="sub">
-        Una selección de proyectos en producción: e-commerce, dashboards,
-        sitios institucionales y herramientas internas. Click en cualquier
+        Una selección de los proyectos más recientes: e-commerce, agentes IA,
+        chatbots y landing pages. Click en cualquier
         ventana para ver el caso.
       </p>
     </div>
