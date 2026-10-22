@@ -2,97 +2,32 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Quick Start
+## Commands
 
-**Install dependencies:**
 ```bash
 npm install
+npm run dev       # Vite dev server on http://localhost:5173 (opens a browser)
+npm run build     # output in dist/
+npm run preview   # serves the production build
 ```
 
-**Development:**
-```bash
-npm run dev
-```
-Auto-opens at `http://localhost:5173`. Vite provides hot module replacement for instant feedback during development.
+There are no tests and no linter or formatter. The project uses plain JSX with no TypeScript.
 
-**Production build:**
-```bash
-npm run build
-npm run preview
-```
+## Stack
 
-The build output goes to the `dist/` directory. Preview runs the production build locally before deployment.
+React 18 and Vite 5, with a minimal `vite.config.js` (only the React plugin and port 5173). Styling is one plain CSS file, `src/styles.css`. The design copies Windows 95/98: beveled windows, pixel fonts and pixel-art images. Fonts are VT323 and Pixelify Sans from Google Fonts (loaded in `index.html`) and MS Sans Serif from `public/fonts/`. UI text is in Spanish.
 
-## Tech Stack
+## Architecture
 
-**Frontend Framework:** React 18.3.1 with Vite 5.4.10 as the build tool
-- **UI:** React functional components with hooks (useState, useEffect, useRef, useCallback, useMemo)
-- **Styling:** Plain CSS with CSS custom properties (CSS variables) for theming
-- **Fonts:** Google Fonts (VT323, Pixelify Sans) + custom MS Sans Serif font file for Windows 95/98 aesthetic
-- **No TypeScript:** Project uses JSX (`.jsx` files) without TypeScript
+- `src/App.jsx` is the shell. It draws the window chrome, the fake menu bar (the `MENUS` object is decoration only), the toolbar and section navigation, and it renders the `TweaksPanel`. It applies the tweak values as `data-*` attributes on the root element (for example `data-theme={tweaks.theme}`).
+- `src/sections.jsx` holds all content: `Hero`, `MyWork`, `Technologies`, `Contact` and the `PROJECTS` data array. Edit content here, not in `App.jsx`. Project images go in `public/images/`.
+- `src/icons.jsx` contains pixel-art SVG icon components (`TechIcon`, `TOOL_ICONS`, `BrandStamp`, `Ico*`).
+- `src/styles.css` defines the colors and fonts as CSS variables in `:root`. Themes and hero styles are only attribute selectors that override those variables: `[data-theme="midnight|hotpink|terminal|storm"]` and `[data-hero="rainbow|hotwire|ocean|ghost"]`. To add a theme, add a selector here and an option to the matching `TweakRadio` in `App.jsx`.
 
-**Design Theme:** Windows 95/98 retro operating system aesthetic with pixel art and beveled UI elements
+### Tweaks panel and the visual editor protocol
 
-## Project Structure
+`src/tweaks-panel.jsx` is a reusable helper meant to run inside a host visual editor (in an iframe). It is not a dev-only feature.
 
-**Core entry points:**
-- `index.html` – HTML entry point, loads React app into `<div id="root">`
-- `src/main.jsx` – React root initialization (ReactDOM.createRoot)
-- `src/App.jsx` – Main application shell component (window chrome, menu bar, toolbar, state management)
-
-**Component modules:**
-- `src/sections.jsx` – Page content sections (Hero, MyWork, Technologies, Contact) + PROJECTS data array
-- `src/icons.jsx` – Pixel-art SVG icon components (TechIcon, IcoMail, IcoPhone, IcoGlobe, IcoChat, BrandStamp, TOOL_ICONS, IcoInfo)
-- `src/tweaks-panel.jsx` – Theme customization panel (TweaksPanel, useTweaks hook, TweakSection, TweakRadio, TweakToggle) with edit mode for visual builder
-
-**Styling:**
-- `src/styles.css` – Global styles including CSS custom properties (colors, fonts), retro window chrome styles (`.win`, `.win-inset`, `.title-bar`), responsive layout, theme variations
-
-**Assets:**
-- `public/fonts/` – Custom font files (MS Sans Serif Bold)
-
-## Architecture & Patterns
-
-### State Management
-App.jsx uses React hooks for state:
-- `tweaks` – Theme configuration (theme, heroGradient, welcomePopup, crtMode, showMarquee, etc.)
-- `useTweaks` hook – Provides tweaks state and dispatch to child components via context
-
-### Data Organization
-All portfolio content (projects, technologies, contact info) is centralized in `sections.jsx`:
-- `PROJECTS` array – Project descriptions with title, role, year, tags, color palettes
-- Export section components (Hero, MyWork, Technologies, Contact) and supporting data
-
-### Menu System
-Fake Windows menu bar (Archivo, Editar, Ver, Favoritos, Acerca) is hardcoded in App.jsx as `MENUS` object for retro aesthetic—not functional, for UI only.
-
-### Theme & Customization
-- CSS variables in `:root` define all colors, fonts, and spacing
-- Theme names: "midnight", "retro", "light", "dark", etc. (referenced in tweaks)
-- TweaksPanel allows real-time theme switching during development; disabled by default in production (won't render if panel hook returns null)
-- Edit mode markers (`/*EDITMODE-BEGIN*/.../*EDITMODE-END*/`) in App.jsx for visual builder integration
-
-### Responsive Design
-CSS is mobile-responsive; layout adapts via media queries and viewport-based sizing.
-
-## Key Files to Know
-
-- **App.jsx** – Controls all application state (tweaks, menu interactions, section navigation). ~500 lines. Imports all sections and icons.
-- **sections.jsx** – All content (projects, tech stack, hero text, contact form). Data-driven; edit here to update portfolio content. ~600 lines.
-- **styles.css** – Entire visual appearance (colors, typography, retro window effects, layout). ~600 lines. Contains all CSS custom properties.
-- **icons.jsx** – SVG icon components. Each icon is a React component returning `<svg>`. ~400 lines.
-- **tweaks-panel.jsx** – Theme customization UI. Exports TweaksPanel component and useTweaks hook. ~700 lines.
-
-## Important Notes
-
-1. **No TypeScript or linting:** This project uses vanilla JavaScript/JSX without TypeScript, ESLint, or Prettier. Type safety is manual.
-
-2. **Tweaks Panel in Dev Only:** The TweaksPanel component is rendered in App.jsx but only appears in localhost when used with the visual editor. In production, the panel logic is disabled or can be removed.
-
-3. **Edit Mode for Visual Builder:** Sections of App.jsx wrapped in `/*EDITMODE-BEGIN*/` comments are designed for live editing in a visual builder environment.
-
-4. **Content is in sections.jsx:** All portfolio data (projects, tech stack, contact) should be edited in sections.jsx, not in App.jsx. Changes to PROJECTS array, technologies, or hero text go there.
-
-5. **CSS Custom Properties:** All theming is controlled through CSS variables in `:root`. Adding a new theme requires defining new color variables in styles.css and updating the tweaks system.
-
-6. **No Build Config Customization:** vite.config.js is minimal (just React plugin + port 5173). Changes to this file are rare.
+- `useTweaks(defaults)` is a plain `useState` wrapper (no context). `setTweak(key, value)` updates local state, then posts `__edit_mode_set_keys` to `window.parent`. The host then **rewrites the `/*EDITMODE-BEGIN*/{…}/*EDITMODE-END*/` block around `DEFAULT_TWEAKS` in `App.jsx` on disk**. Keep those markers, and keep that block a JSON-style object literal (quoted keys, no expressions).
+- The panel stays hidden until the host sends `__activate_edit_mode`. On plain localhost or in production nothing sends it, so the panel never appears. You can safely remove the panel from `App.jsx`.
+- The extra controls (`TweakSlider`, `TweakColor`, `TweakSelect`, and so on) are exported but not all used. The deck-stage and rail code in that file belongs to the generic helper and has no effect on this site.

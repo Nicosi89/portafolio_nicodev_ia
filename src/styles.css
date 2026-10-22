@@ -479,7 +479,6 @@ body {
 }
 .project-win .screen {
   margin: 10px 10px 0;
-  height: 200px;
   border-top: 2px solid var(--bevel-dark);
   border-left: 2px solid var(--bevel-dark);
   border-right: 2px solid var(--bevel-light);
@@ -733,7 +732,7 @@ body {
   padding: 20px;
 }
 .modal {
-  width: min(720px, 100%);
+  width: min(900px, 100%);
   max-height: 90vh;
   overflow: auto;
   background: var(--os-gray);
@@ -756,9 +755,12 @@ body {
 }
 .modal-media {
   width: 100%;
-  aspect-ratio: 300 / 450;
   overflow: hidden;
+  background: #3a3a3a;
 }
+.modal-grid.is-gallery .modal-media { padding: 8px; }
+.modal-media.is-video { aspect-ratio: 300 / 450; }
+.modal-grid.is-gallery { grid-template-columns: 1fr; }
 .modal-iframe {
   width: 100%;
   height: 100%;
@@ -794,7 +796,7 @@ body {
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  .modal-media {
+  .modal-media.is-video {
     max-width: 260px;
     margin: 0 auto;
   }

@@ -163,7 +163,7 @@ const ScreenshotSlider = ({ project }) => {
   if (imgs.length === 0) {
     return (
       <div style={{
-        width: "100%", height: "100%", objectFit:"cover",
+        width: "100%", aspectRatio: "4 / 3",
         background: `linear-gradient(135deg, ${project.palette[0]}, ${project.palette[1]})`,
         display: "grid", placeItems: "center",
         color: "#fff", fontFamily: "var(--mono-font)", fontSize: 18,
@@ -174,11 +174,11 @@ const ScreenshotSlider = ({ project }) => {
   }
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div style={{ position: "relative", width: "100%" }}>
       <img
         src={imgs[idx]}
         alt={`screenshot ${idx + 1}`}
-        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
+        style={{ width: "100%", height: "auto", maxHeight: "60vh", objectFit: "contain", display: "block" }}
       />
       {imgs.length > 1 && (
         <>
@@ -217,8 +217,8 @@ const ProjectModal = ({ project, onClose }) => {
           </div>
         </div>
         <div className="modal-body">
-          <div className="modal-grid">
-            <div className="win-inset modal-media">
+          <div className={`modal-grid${project.video_url ? "" : " is-gallery"}`}>
+            <div className={`win-inset modal-media${project.video_url ? " is-video" : ""}`}>
               {project.video_url ? (
                 <iframe
                   src={`https://www.youtube.com/embed/${new URL(project.video_url).searchParams.get("v") || project.video_url.split("/").pop()}`}
@@ -331,7 +331,7 @@ const App = () => {
               display: "inline-block",
               border: "1px solid #000",
             }} />
-            Portafolio Full Stack — Nicolás Sicard
+            Portafolio Desarrollador IA Full Stack — Nicolás Sicard
           </div>
           <div className="title-bar-controls">
             <button className="title-btn" aria-label="minimizar">_</button>

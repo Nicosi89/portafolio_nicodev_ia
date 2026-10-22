@@ -49,18 +49,30 @@ const Hero = ({ onCta }) => {
 const PROJECTS = [
   {
     id: "p1",
+    title: "Sistema POS - GastroPro",
+    role: "Desarrollador",
+    year: "2026",
+    desc: "Diseño y desarrollo frontend y backend de app web resposiva GastroPro para el sector gastronómico de Latinoamérica.",
+    tags: ["Node.js", "TypeScript", "React Native", "Convex", "Netlify"],
+    palette: ["#000080", "#ff7c66", "#ffd400"],
+    swatch: "shop",
+    imagen_portada: ["/images/gastro-pro-1.png"],
+    images: ["/images/gastro-pro-1.png", "/images/gastro-pro-2.png", "/images/gastro-pro-3.png", "/images/gastro-pro-4.png"],
+  },
+  {
+    id: "p2",
     title: "ChatBot IA por WhatsApp - Lukitas",
     role: "Desarrollador",
     year: "2026",
     desc: "ChatBot (Agente de IA) 100% por medio de WhatsApp para el control y manejo de las finanzas personales.",
-    tags: ["Node.js", "TypeScript", "API WhatsApp", "API Gemini IA", "Claude Code", "Convex"],
+    tags: ["Node.js", "TypeScript", "API WhatsApp", "API Gemini IA", "Claude IA", "Convex"],
     palette: ["#000080", "#ff7c66", "#ffd400"],
     swatch: "shop",
     imagen_portada: ["/images/lukas_1.png"],
     images: ["/images/lukas_1.png", "/images/lukas_2.png"],
   },
   {
-    id: "p2",
+    id: "p3",
     title: "Landing Page - SocioPro",
     role: "Desarrollador",
     year: "2026",
@@ -74,7 +86,7 @@ const PROJECTS = [
     
   },
   {
-    id: "p3",
+    id: "p4",
     title: "Chatbot y app web - SocioPro",
     role: "Emprendedor y Desarrollador",
     year: "2025 - 2026",
@@ -87,7 +99,7 @@ const PROJECTS = [
     images: [],
   },
   {
-    id: "p4",
+    id: "p5",
     title: "MVP Web App E-learning",
     role: "Desarrollador",
     year: "2024",
@@ -99,7 +111,7 @@ const PROJECTS = [
     swatch: "shop",
   },
   {
-    id: "p5",
+    id: "p6",
     title: "Reediseño Ecommerce - Fire & Ice",
     role: "Desarrollador",
     year: "2024",
@@ -111,7 +123,7 @@ const PROJECTS = [
     imagen_portada: ["images/ahora-fandi.png"],
   },
   {
-    id: "p6",
+    id: "p7",
     title: "App Procesos Internos - Amazóniko",
     role: "Desarrollador",
     year: "2023",
@@ -128,7 +140,7 @@ const ProjectScreen = ({ image }) => {
   // Different small pixel-art "screenshots" per project type
  
     return (
-      <img src={image} width="100%" height="100%" style={{objectFit:"cover",objectPosition:"top",display:"block"}}/>
+      <img src={image} style={{width:"100%",height:"auto",display:"block"}}/>
     );
   }
 
